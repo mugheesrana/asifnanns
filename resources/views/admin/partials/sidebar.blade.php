@@ -84,6 +84,7 @@
                     </ul>
 
                 </li>
+<<<<<<< HEAD
                 <li> <a class="has-arrow waves-effect waves-dark" href="{{ route('admin.reviews') }}"
                         aria-expanded="false"><i class="mdi mdi-message"></i><span
                             class="hide-menu">Reviews</span></a>
@@ -92,6 +93,17 @@
                    <li> <a class="has-arrow waves-effect waves-dark" href="{{ route('admin.teams') }}"
                         aria-expanded="false"><i class="mdi mdi-account-group"></i><span
                             class="hide-menu">Team</span></a>
+=======
+                <li> <a class="has-arrow waves-effect waves-dark" href="{{ route('admin.blogs.index') }}"
+                        aria-expanded="false"><i class="mdi mdi-account-card-outline"></i><span class="hide-menu">Services</span></a>
+                    <ul aria-expanded="false" class="collapse">
+                        <li><a href="{{ route('admin.service-categories.index') }}">Services Category</a></li>
+                        <li><a href="{{ route('admin.services.index') }}">Services</a></li>
+                        <li><a href="{{ route('admin.service-bookings.index') }}">Request Services</a></li>
+
+                    </ul>
+
+>>>>>>> 800efa32448576f22b04ab266d177ad25efd59d5
                 </li>
                 <li> <a class="has-arrow waves-effect waves-dark" href="{{ route('admin.settings') }}"
                         aria-expanded="false"><i class="mdi mdi-settings"></i><span

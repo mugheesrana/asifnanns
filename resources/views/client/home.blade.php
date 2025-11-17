@@ -546,60 +546,45 @@
                     <div dir="ltr" class="swiper tf-sw-mobile" data-preview="3" data-tablet="2"
                         data-mobile-sm="2" data-mobile="1" data-space-lg="30" data-space-md="15" data-space="15">
                         <div class="swiper-wrapper">
+                        @foreach ($services as $service)
                             <div class="swiper-slide">
                                 <div class="blog-article-item style1 hover-img">
+
                                     <div class="images img-style relative flex-none">
-                                        <img class="lazyload" data-src="/nanns/assets/images/blog/blog-5.jpg"
-                                            src="/nanns/assets/images/blog/blog-5.jpg" alt="images">
-                                        <div class="date">Featured</div>
+                                        <img class="lazyload"
+                                            data-src="{{ asset($service->thumbnail ?? 'default.jpg') }}"
+                                            src="{{ asset($service->thumbnail ?? 'default.jpg') }}"
+                                            alt="{{ $service->title }}">
+                                        
+                                        @if($service->is_featured)
+                                            <div class="date">Featured</div>
+                                        @endif
                                     </div>
+
                                     <div class="content">
                                         <div class="sub-box flex align-center fs-13 fw-6">
 
-                                            <a href="/service-details" class="category text-color-3">First Drives</a>
-                                        </div>
-                                        <h3><a href="/service-details">Vehicle Maintenance & Repair Services</a></h3>
-                                        <p>The sub-4 metre SUV segment has been quite active over the last six
-                                            months or so, with the launch of various facelifted...</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="blog-article-item style1 hover-img">
-                                    <div class="images img-style relative flex-none">
-                                        <img class="lazyload" data-src="/nanns/assets/images/blog/blog-3.jpg"
-                                            src="/nanns/assets/images/blog/blog-3.jpg" alt="images">
-                                        <div class="date">Featured</div>
-                                    </div>
-                                    <div class="content">
-                                        <div class="sub-box flex align-center fs-13 fw-6">
+                                            <a href=""
+                                            class="category text-color-3">
+                                            {{ $service->category->name ?? '' }}
+                                            </a>
 
-                                            <a href="/service-details" class="category text-color-3">First Drives</a>
                                         </div>
-                                        <h3><a href="/service-details">Vehicle Consultation & Advisory Services</a></h3>
-                                        <p>The sub-4 metre SUV segment has been quite active over the last six
-                                            months or so, with the launch of various facelifted...</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="blog-article-item style1 hover-img">
-                                    <div class="images img-style relative flex-none">
-                                        <img class="lazyload" data-src="/nanns/assets/images/blog/blog-2.jpg"
-                                            src="/nanns/assets/images/blog/blog-2.jpg" alt="images">
-                                        <div class="date">Featured</div>
-                                    </div>
-                                    <div class="content">
-                                        <div class="sub-box flex align-center fs-13 fw-6">
 
-                                            <a href="/service-details" class="category text-color-3">First Drives</a>
-                                        </div>
-                                        <h3><a href="/service-details">Vehicle Inspection & Diagnostic Services</a></h3>
-                                        <p>The sub-4 metre SUV segment has been quite active over the last six
-                                            months or so, with the launch of various facelifted...</p>
+                                        <h3>
+                                            <a href="{{ route('service-details', $service->slug) }}">
+                                                {{ $service->title }}
+                                            </a>
+                                        </h3>
+
+                                        <p>
+                                            {{ Str::limit($service->short_description ?? $service->description, 80) }}
+                                        </p>
                                     </div>
+
                                 </div>
                             </div>
+                         @endforeach
                         </div>
                         <div class="swiper-pagination3"></div>
                     </div>

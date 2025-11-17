@@ -56,75 +56,42 @@
                                                     <li class="current"> <a href="/">Home</a></li>
                                                     <li> <a href="{{route('cars.list')}}">Cars Listings</a></li>
 
-                                                    <li class="dropdown2"><a href="/service-listings">Services</a>
+                                                    <li class="dropdown2">
+                                                        <a href="{{ route('service-listings') }}">Services</a>
                                                         <ul>
-                                                            <li><a href="service-listings">All Services</a></li>
-
-                                                            <li class="dropdown2"><a href="/service-details">Vehicle Maintenance
-                                                                    & Repair Services</a>
-                                                                <ul>
-                                                                    <li><a href="/service-details">Routine
-                                                                            Maintenance
-                                                                        </a>
-                                                                    </li>
-                                                                    <li><a href="/service-details">Mechanical
-                                                                            Repairs
-                                                                        </a>
-                                                                    </li>
-                                                                    <li><a href="/service-details">Electrical &
-                                                                            Electronic Systems
-                                                                        </a>
-                                                                    </li>
-                                                                    <li><a href="/service-details">Emergency
-                                                                            and On-Site Repairs
-                                                                        </a>
-                                                                    </li>
-                                                                </ul>
-                                                            </li>
-                                                            <li class="dropdown2"><a href="/service-details">Vehicle Inspection
-                                                                    & Diagnostic Services</a>
-                                                                <ul>
-                                                                    <li><a href="/service-details">Pre-Purchase
-                                                                            Vehicle Inspection
-                                                                        </a></li>
-                                                                    <li><a href="/service-details">Safety
-                                                                            and Emissions Checks
-                                                                        </a></li>
-                                                                    <li><a href="/service-details">Safety
-                                                                            and Emissions Checks
-                                                                        </a></li>
-                                                                    <li><a href="/service-details">Performance
-                                                                            Evaluation
-                                                                        </a></li>
-                                                                </ul>
+                                                            {{-- All services link --}}
+                                                            <li>
+                                                                <a href="{{ route('service-listings') }}">All Services</a>
                                                             </li>
 
-                                                            <li class="dropdown2"><a href="/service-details">Vehicle Consultation
-                                                                    & Advisory Services</a>
-                                                                <ul>
-                                                                    <li><a href="/service-details">
-                                                                            Personal Car Shopper / Vehicle Matching
-                                                                            Service </a></li>
-                                                                    <li><a href="/service-details">
-                                                                            Car Deal Consulting </a></li>
-                                                                    <li><a href="/service-details">
-                                                                            Vehicle Ownership Cost Analysis </a></li>
-                                                                </ul>
-                                                            </li>
+                                                            {{-- Dynamic main categories with subcategories --}}
+                                                            @foreach($serviceMenuCategories as $cat)
+                                                            <li class="dropdown2">
+                                                                {{-- MAIN CATEGORY: show services from this category + its subcategories --}}
+                                                                <a href="{{ route('service-listings', ['category' => $cat->slug]) }}">
+                                                                    {{ $cat->name }}
+                                                                </a>
 
-                                                            <li class="dropdown2"><a href="/service-details">Mobile Technician & At-Home Services</a>
+                                                                {{-- Subcategories dropdown --}}
+                                                                @if($cat->children->count())
                                                                 <ul>
-                                                                    <li><a href="/service-details">
-                                                                            On-Demand Car Repair at Client’s Home or Office </a></li>
-                                                                    <li><a href="/service-details">
-                                                                            Pick-up & Drop-off Service</a></li>
-                                                                    <li><a href="/service-details">
-                                                                            Emergency Call-Outs </a></li>
+                                                                    @foreach($cat->children as $sub)
+                                                                    {{-- SUBCATEGORY: show only services from this subcategory --}}
+                                                                    <li>
+                                                                        <a href="{{ route('service-listings', ['category' => $sub->slug]) }}">
+                                                                            {{ $sub->name }}
+                                                                        </a>
+                                                                    </li>
+                                                                    @endforeach
                                                                 </ul>
+                                                                @endif
                                                             </li>
-                                                            {{-- <li><a href="/nanns/dashboard.html">Dashboard</a></li> --}}
+                                                            @endforeach
                                                         </ul>
                                                     </li>
+
+
+
                                                     <li><a href="/find-your-engine">Find Your Engine</a></li>
                                                     <li><a href="/about-us">About Us</a></li>
 

@@ -7,9 +7,17 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="title-inner style">
-                        <div class="title-group fs-12"><a class="home fw-6 text-color-3"
-                                href="index.html">Home</a><span>Service Details
-                            </span></div>
+                        <div class="title-group fs-12">
+                            <a class="home fw-6 text-color-3" href="{{ url('/') }}">Home</a>
+                            @if($service->category && $service->category->parent)
+                                <span>{{ $service->category->parent->name }} / {{ $service->category->name }}</span>
+                            @elseif($service->category)
+                                <span>{{ $service->category->name }}</span>
+                            @else
+                                <span>Service Details</span>
+                            @endif
+                        </div>
+                        <h1 class="mt-2">{{ $service->title }}</h1>
                     </div>
                 </div>
             </div>
@@ -20,140 +28,151 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 col-md-12">
+
+                    {{-- Main Image --}}
                     <div class="features-thumb mb-4 img-style-hover">
-                        <img class="w-100" src="/nanns/assets/images/dashboard/single-dealer.jpg" alt="images">
+                        <img class="w-100"
+                             src="{{ $service->thumbnail ? asset($service->thumbnail) : asset('nanns/assets/images/dashboard/single-dealer.jpg') }}"
+                             alt="{{ $service->title }}">
                     </div>
+
+                    {{-- Title --}}
                     <h2 class="title mb-3">
-                        Honda cars Pasig
+                        {{ $service->title }}
                     </h2>
-                    <p class="mb-2">Stay informed about emerging trends in the housing market, such as the demand for
-                        sustainable homes, technological advancements, and demographic shifts. Companies aligning with these
-                        trends may present attractive investment <br> opportunities.</p>
-                    <p>Take a long-term investment approach if you believe in the stability and growth potential of the
-                        housing sector. Look for companies with solid fundamentals and a track record of success. For
-                        short-term traders, capitalize on market fluctuations driven by economic reports, interest rate
-                        changes, or industry-specific news. Keep a close eye on earnings reports and government housing data
-                        releases.</p>
 
+                    {{-- Short Description --}}
+                    @if($service->short_description)
+                        <p class="mb-2">
+                            {{ $service->short_description }}
+                        </p>
+                    @endif
 
+                    {{-- Full Description --}}
+                    @if($service->description)
+                        <div class="mb-4">
+                            {!! nl2br(e($service->description)) !!}
+                        </div>
+                    @endif
 
-                    <section class="section-blog tf-section">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="heading-section flex align-center justify-space flex-wrap gap-20">
-                                        <h2 class="wow fadeInUpSmall" data-wow-delay="0.2s" data-wow-duration="1000ms">
-                                            Related Services</h2>
-                                        <a href="/service-listings" class="tf-btn-arrow wow fadeInUpSmall"
-                                            data-wow-delay="0.2s" data-wow-duration="1000ms">View all<i
-                                                class="icon-autodeal-btn-right"></i></a>
-                                    </div>
-                                    <div dir="ltr" class="swiper tf-sw-mobile" data-preview="3" data-tablet="2"
-                                        data-mobile-sm="2" data-mobile="1" data-space-lg="30" data-space-md="15"
-                                        data-space="15">
-                                        <div class="swiper-wrapper">
-                                            <div class="swiper-slide">
-                                                <div class="blog-article-item style1 hover-img">
-                                                    <div class="images img-style relative flex-none">
-                                                        <img class="lazyload"
-                                                            data-src="/nanns/assets/images/blog/blog-5.jpg"
-                                                            src="/nanns/assets/images/blog/blog-5.jpg" alt="images">
-                                                        <div class="date">Featured</div>
-                                                    </div>
-                                                    <div class="content">
-                                                        <div class="sub-box flex align-center fs-13 fw-6">
+                    {{-- Price + Category badge (optional) --}}
+                    <div class="mb-4 d-flex align-items-center gap-3 flex-wrap">
+                        @if(!is_null($service->price))
+                            <span class="badge badge-primary px-3 py-2">
+                                Price: {{ number_format($service->price, 2) }}
+                            </span>
+                        @endif
 
-                                                            <a href="/service-details" class="category text-color-3">First
-                                                                Drives</a>
-                                                        </div>
-                                                        <h3><a href="/service-details">Vehicle Maintenance & Repair
-                                                                Services</a></h3>
-                                                        <p>The sub-4 metre SUV segment has been quite active over the last
-                                                            six
-                                                            months or so, with the launch of various facelifted...</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="swiper-slide">
-                                                <div class="blog-article-item style1 hover-img">
-                                                    <div class="images img-style relative flex-none">
-                                                        <img class="lazyload"
-                                                            data-src="/nanns/assets/images/blog/blog-3.jpg"
-                                                            src="/nanns/assets/images/blog/blog-3.jpg" alt="images">
-                                                        <div class="date">Featured</div>
-                                                    </div>
-                                                    <div class="content">
-                                                        <div class="sub-box flex align-center fs-13 fw-6">
+                        @if($service->category)
+                            <span class="badge badge-info px-3 py-2">
+                                {{ $service->category->parent ? $service->category->parent->name . ' → ' : '' }}
+                                {{ $service->category->name }}
+                            </span>
+                        @endif
 
-                                                            <a href="/service-details" class="category text-color-3">First
-                                                                Drives</a>
-                                                        </div>
-                                                        <h3><a href="/service-details">Vehicle Consultation & Advisory
-                                                                Services</a>
-                                                        </h3>
-                                                        <p>The sub-4 metre SUV segment has been quite active over the last
-                                                            six
-                                                            months or so, with the launch of various facelifted...</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="swiper-slide">
-                                                <div class="blog-article-item style1 hover-img">
-                                                    <div class="images img-style relative flex-none">
-                                                        <img class="lazyload"
-                                                            data-src="/nanns/assets/images/blog/blog-2.jpg"
-                                                            src="/nanns/assets/images/blog/blog-2.jpg" alt="images">
-                                                        <div class="date">Featured</div>
-                                                    </div>
-                                                    <div class="content">
-                                                        <div class="sub-box flex align-center fs-13 fw-6">
+                        @if($service->is_featured)
+                            <span class="badge badge-warning px-3 py-2">
+                                Featured
+                            </span>
+                        @endif
+                    </div>
 
-                                                            <a href="/service-details" class="category text-color-3">First
-                                                                Drives</a>
-                                                        </div>
-                                                        <h3><a href="/">Vehicle Inspection & Diagnostic Services</a>
-                                                        </h3>
-                                                        <p>The sub-4 metre SUV segment has been quite active over the last
-                                                            six
-                                                            months or so, with the launch of various facelifted...</p>
-                                                    </div>
-                                                </div>
-                                            </div>
+                    {{-- ================== Related Services Slider ================== --}}
+                    @if($relatedServices->count())
+                        <section class="section-blog tf-section">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="heading-section flex align-center justify-space flex-wrap gap-20">
+                                            <h2 class="wow fadeInUpSmall" data-wow-delay="0.2s" data-wow-duration="1000ms">
+                                                Related Services
+                                            </h2>
+                                            <a href="{{ url('/service-listings') }}" class="tf-btn-arrow wow fadeInUpSmall"
+                                               data-wow-delay="0.2s" data-wow-duration="1000ms">
+                                                View all<i class="icon-autodeal-btn-right"></i>
+                                            </a>
                                         </div>
-                                        <div class="swiper-pagination3"></div>
+
+                                        <div dir="ltr" class="swiper tf-sw-mobile"
+                                             data-preview="3" data-tablet="2"
+                                             data-mobile-sm="2" data-mobile="1"
+                                             data-space-lg="30" data-space-md="15"
+                                             data-space="15">
+
+                                            <div class="swiper-wrapper">
+                                                @foreach($relatedServices as $rel)
+                                                    <div class="swiper-slide">
+                                                        <div class="blog-article-item style1 hover-img">
+                                                            <div class="images img-style relative flex-none">
+                                                                <img class="lazyload"
+                                                                     data-src="{{ $rel->thumbnail ? asset($rel->thumbnail) : asset('nanns/assets/images/blog/blog-5.jpg') }}"
+                                                                     src="{{ $rel->thumbnail ? asset($rel->thumbnail) : asset('nanns/assets/images/blog/blog-5.jpg') }}"
+                                                                     alt="{{ $rel->title }}">
+                                                                @if($rel->is_featured)
+                                                                    <div class="date">Featured</div>
+                                                                @endif
+                                                            </div>
+                                                            <div class="content">
+                                                                <div class="sub-box flex align-center fs-13 fw-6">
+                                                                    @if($rel->category)
+                                                                        <a href="#"
+                                                                           class="category text-color-3">
+                                                                            {{ $rel->category->name }}
+                                                                        </a>
+                                                                    @endif
+                                                                </div>
+                                                                <h3>
+                                                                    <a href="{{ route('service-details', $rel->slug) }}">
+                                                                        {{ $rel->title }}
+                                                                    </a>
+                                                                </h3>
+                                                                <p>
+                                                                    {{ \Illuminate\Support\Str::limit($rel->short_description ?? $rel->description, 100) }}
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+
+                                            <div class="swiper-pagination3"></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </section>
+                        </section>
+                    @endif
 
-
-                    {{-- <div class="widget-book-apoint">
-                        <p class="mb-3">You are interested in this dealership and want to book an appointment with them?
-                            <br> Just leave your contact and preferred date and time
-                        </p>
-                        <a href="#">Request Service</a>
-                    </div> --}}
+                    {{-- ================== Service Booking Form ================== --}}
                     <div class="widget-book-apoint">
                         <p class="mb-3">
-                            You are interested in this dealership and want to book an appointment with them?
+                            You are interested in this service and want to book an appointment?
                             <br> Just leave your contact and preferred date and time.
                         </p>
 
-                        <form method="post" action="" enctype="multipart/form-data" class="form-submit">
+                        @if(session('success'))
+                            <div class="alert alert-success">{{ session('success') }}</div>
+                        @endif
+
+                        <form method="post"
+                              action="{{ route('services.book', $service->id) }}"
+                              enctype="multipart/form-data"
+                              class="form-submit">
                             @csrf
 
                             <div class="grid-sw-2">
                                 <fieldset class="style-text">
                                     <label class="font-1 fs-14 fw-5">Name</label>
-                                    <input type="text" name="name" class="tb-my-input" placeholder="Your Name"
-                                        required>
+                                    <input type="text" name="name" class="tb-my-input"
+                                           placeholder="Your Name" value="{{ old('name') }}" required>
+                                    @error('name') <small class="text-danger">{{ $message }}</small> @enderror
                                 </fieldset>
 
                                 <fieldset class="style-text">
                                     <label class="font-1 fs-14 fw-5">Email</label>
-                                    <input type="email" name="email" class="tb-my-input" placeholder="Your Email"
-                                        required>
+                                    <input type="email" name="email" class="tb-my-input"
+                                           placeholder="Your Email" value="{{ old('email') }}" required>
+                                    @error('email') <small class="text-danger">{{ $message }}</small> @enderror
                                 </fieldset>
                             </div>
 
@@ -161,20 +180,23 @@
                                 <fieldset class="style-text">
                                     <label class="font-1 fs-14 fw-5">Phone</label>
                                     <input type="tel" name="phone" class="tb-my-input"
-                                        placeholder="Your Phone Number" required>
+                                           placeholder="Your Phone Number" value="{{ old('phone') }}" required>
+                                    @error('phone') <small class="text-danger">{{ $message }}</small> @enderror
                                 </fieldset>
 
                                 <fieldset class="style-text">
                                     <label class="font-1 fs-14 fw-5">Preferred Date</label>
-                                    <input type="date" name="date" class="tb-my-input" required>
+                                    <input type="date" name="preferred_date" class="tb-my-input"
+                                           value="{{ old('preferred_date') }}" required>
+                                    @error('preferred_date') <small class="text-danger">{{ $message }}</small> @enderror
                                 </fieldset>
                             </div>
 
-
-
                             <fieldset class="style-text">
                                 <label class="font-1 fs-14 fw-5">Message</label>
-                                <textarea name="message" rows="3" placeholder="Your message or request"></textarea>
+                                <textarea name="message" rows="3"
+                                          placeholder="Your message or request">{{ old('message') }}</textarea>
+                                @error('message') <small class="text-danger">{{ $message }}</small> @enderror
                             </fieldset>
 
                             <div class="row">
@@ -185,6 +207,7 @@
                                         <small class="fs-12 text-muted">
                                             Upload image of your car or issue (JPG, PNG up to 5MB)
                                         </small>
+                                        @error('attachment') <small class="text-danger">{{ $message }}</small> @enderror
                                     </fieldset>
                                 </div>
 
@@ -192,19 +215,19 @@
                                     <fieldset class="phone-wrap style-text">
                                         <label class="font-1 fs-14 fw-5">Service Type</label>
                                         <select name="service_type" class="tb-my-input" required
-                                            style="height: 48px; border: 1px solid #e1e1e1;  padding: 0 15px; border-radius: 6px; background-color: #fff; font-size: 14px; color: #555; appearance: none;">
+                                                style="height: 48px; border: 1px solid #e1e1e1;  padding: 0 15px; border-radius: 6px; background-color: #fff; font-size: 14px; color: #555; appearance: none;">
                                             <option value="">Select Service</option>
-                                            <option value="Maintenance">Maintenance</option>
-                                            <option value="Repair">Repair</option>
-                                            <option value="Inspection">Inspection</option>
-                                            <option value="Detailing">Detailing</option>
-                                            <option value="Custom Upgrade">Custom Upgrade</option>
-                                            <option value="Other">Other</option>
+                                            <option value="Maintenance" {{ old('service_type')=='Maintenance' ? 'selected' : '' }}>Maintenance</option>
+                                            <option value="Repair" {{ old('service_type')=='Repair' ? 'selected' : '' }}>Repair</option>
+                                            <option value="Inspection" {{ old('service_type')=='Inspection' ? 'selected' : '' }}>Inspection</option>
+                                            <option value="Detailing" {{ old('service_type')=='Detailing' ? 'selected' : '' }}>Detailing</option>
+                                            <option value="Custom Upgrade" {{ old('service_type')=='Custom Upgrade' ? 'selected' : '' }}>Custom Upgrade</option>
+                                            <option value="Other" {{ old('service_type')=='Other' ? 'selected' : '' }}>Other</option>
                                         </select>
+                                        @error('service_type') <small class="text-danger">{{ $message }}</small> @enderror
                                     </fieldset>
                                 </div>
                             </div>
-
 
                             <div class="button-boxs">
                                 <button type="submit" class="sc-button">
@@ -213,21 +236,35 @@
                             </div>
                         </form>
                     </div>
+<<<<<<< HEAD
                     {{-- ======= Review Section Styled Like Service Booking ============ --}}
                     <div class="widget-book-apoint mt-5">
                         <div class="heading-section flex align-center justify-space flex-wrap gap-20">
                             <h2 class="wow fadeInUpSmall" data-wow-delay="0.2s" data-wow-duration="1000ms">
                                 Add Review</h2>
+=======
+
+                    {{-- ============== Review Section (still mostly static) ============== --}}
+                    <div class="widget-book-apoint mt-5">
+                        <div class="heading-section flex align-center justify-space flex-wrap gap-20">
+                            <h2 class="wow fadeInUpSmall" data-wow-delay="0.2s" data-wow-duration="1000ms">
+                                Add Review
+                            </h2>
+>>>>>>> 800efa32448576f22b04ab266d177ad25efd59d5
                         </div>
                         <p class="mb-3">
                             Share your experience with this service.
                             <br> Your feedback helps others make better decisions.
                         </p>
 
+<<<<<<< HEAD
                         <form class="form-submit" action="{{ route('review.store') }}" method="POST"
                             enctype="multipart/form-data">
                             @csrf
 
+=======
+                        <form class="form-submit" enctype="multipart/form-data">
+>>>>>>> 800efa32448576f22b04ab266d177ad25efd59d5
                             <div class="grid-sw-2">
                                 <fieldset class="style-text">
                                     <label class="font-1 fs-14 fw-5">Name</label>
@@ -264,7 +301,6 @@
                             </fieldset>
 
                             <div class="row">
-                                {{-- Upload Image --}}
                                 <div class="col-sm-6">
                                     <fieldset class="style-text">
                                         <label class="font-1 fs-14 fw-5">Upload Image (optional)</label>
@@ -299,16 +335,13 @@
 
                     </div>
 
-
                 </div>
 
             </div>
         </div>
-
     </section>
-
-
 @endsection
+
 @section('scripts')
     <script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -336,6 +369,4 @@
             color: #ffcc00;
         }
     </style>
-
-
 @endsection

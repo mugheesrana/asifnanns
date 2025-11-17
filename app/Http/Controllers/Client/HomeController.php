@@ -1,11 +1,13 @@
 <?php
 
 namespace App\Http\Controllers\Client;
+
 use App\Http\Controllers\Controller;
 use App\Models\Car;
 use App\Models\Brand;
 use App\Models\CarModel;
 use App\Models\CarVersion;
+use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -38,7 +40,12 @@ class HomeController extends Controller
             ->orderByDesc('cars_count')
             ->take(5)
             ->get();
-        return view('client.home', compact('brands', 'years', 'colors', 'engines', 'maxPrice', 'priceMin', 'priceMax', 'topBrands'));
+            $services = Service::with('category')
+            ->where('status', 1)
+            ->orderBy('created_at', 'desc')
+            ->take(3)
+            ->get();
+        return view('client.home', compact('brands', 'years', 'colors', 'engines', 'maxPrice', 'priceMin', 'priceMax', 'topBrands','services'));
     }
     public function carDetails($id)
     {

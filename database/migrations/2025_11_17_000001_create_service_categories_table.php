@@ -1,0 +1,35 @@
+<?php 
+// database/migrations/2025_11_17_000001_create_service_categories_table.php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration {
+    public function up(): void
+    {
+        Schema::create('service_categories', function (Blueprint $table) {
+            $table->id();
+
+            // parent_id = null  => main category
+            // parent_id = id    => subcategory
+            $table->foreignId('parent_id')
+                ->nullable()
+                ->constrained('service_categories')
+                ->nullOnDelete();
+
+            $table->string('name');
+            $table->string('slug')->unique();   // for SEO URLs
+            $table->text('description')->nullable();
+            $table->boolean('status')->default(true); // active/inactive
+            $table->integer('sort_order')->default(0);
+
+            $table->timestamps();
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('service_categories');
+    }
+};

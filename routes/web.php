@@ -13,7 +13,14 @@ use App\Http\Controllers\Client\ServicesController;
 use App\Http\Controllers\CarVersionController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\RolePermissionController;
+use App\Http\Controllers\ServiceBookingController;
 use App\Http\Controllers\Client\HomeController;
+use App\Http\Controllers\Admin\ServiceCategoryController;
+use App\Http\Controllers\Admin\AdminServicesController;
+use App\Http\Controllers\Admin\AdminServiceBookingController;
+
+
+
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -21,14 +28,23 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 //     return view('client.pages.car-listings');
 // })->name('car-listings');
 
-Route::get('/service-listings', function () {
-    return view('client.pages.service-listings');
-})->name('service-listings');
+Route::get('/service-listings', [ServicesController::class, 'index'])
+    ->name('service-listings');
 
 
+<<<<<<< HEAD
 Route::get('/service-details', function () {
     return view('client.pages.service-details');
 })->name('service-details');
+=======
+
+
+Route::get('/service-details/{slug}', [ServicesController::class, 'show'])
+    ->name('service-details');
+
+Route::post('/service/{service}/book', [ServiceBookingController::class, 'store'])
+    ->name('services.book');
+>>>>>>> 800efa32448576f22b04ab266d177ad25efd59d5
 
 Route::get('/custom-service-request', function () {
     return view('client.pages.custom-service-request');
@@ -100,6 +116,31 @@ Route::middleware(['auth'])->group(function () {
 
 });
 
+Route::prefix('admin')
+    ->name('admin.')
+    ->middleware(['auth']) // or your admin middleware
+    ->group(function () {
+        Route::resource('service-categories', ServiceCategoryController::class)
+            ->except(['show']);
+    });
+
+    Route::prefix('admin')
+    ->name('admin.')
+    ->middleware(['auth']) // or your admin middleware
+    ->group(function () {
+        Route::resource('services', AdminServicesController::class)
+            ->except(['show']);
+    });
+
+    Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
+
+        Route::get('service-bookings', [AdminServiceBookingController::class, 'index'])
+            ->name('service-bookings.index');
+
+        Route::patch('service-bookings/{booking}/status', [AdminServiceBookingController::class, 'updateStatus'])
+            ->name('service-bookings.update-status');
+    });
+    
 
 
 require __DIR__ . '/admin_tools.php';
