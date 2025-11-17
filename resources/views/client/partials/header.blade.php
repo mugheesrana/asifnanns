@@ -155,7 +155,7 @@
                                             </div>
                                         </div>
 
-                                        <a href="/" class="header-favorite flex items-center justify-center">
+                                        <a href="{{route('wishlist')}}" class="header-favorite flex items-center justify-center">
                                             <i class="icon-autodeal-favorite fs-18"></i>
                                         </a>
                                         {{-- <div class="register">

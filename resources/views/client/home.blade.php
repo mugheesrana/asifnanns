@@ -338,7 +338,7 @@
                                                     </div>
                                                     <ul class="change-heart flex">
                                                         <li class="box-icon w-32">
-                                                            <a href="#" class="icon">
+                                                            <a href="#" class="icon icon-favorite" data-car-id="{{ $car->id }}">
                                                                 <svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                                     <path d="M16.5 4.875C16.5 2.80417 14.7508 1.125 12.5933 1.125C10.9808 1.125 9.59583 2.06333 9 3.4025C8.40417 2.06333 7.01917 1.125 5.40583 1.125C3.25 1.125 1.5 2.80417 1.5 4.875C1.5 10.8917 9 14.875 9 14.875C9 14.875 16.5 10.8917 16.5 4.875Z" stroke="CurrentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                                                 </svg>
@@ -440,159 +440,46 @@
                             data-wow-duration="1000ms">View all<i class="icon-autodeal-btn-right"></i></a>
                     </div>
                 </div>
+                 @php
+                    $reviews = \App\Models\Review::where('status', 1)->latest()->get();
+                @endphp
                 <div class="col-lg-12">
                     <div dir="ltr" class="swiper-container carousel-7 overflow-hidden">
                         <div class="swiper-wrapper ">
-                            <div class="swiper-slide">
-                                <div class="tf-testimonial bg-4">
-                                    <div class="inner-top flex-two">
-                                        <img class="lazyload" data-src="/nanns/assets/images/section/star-5.png"
-                                            src="/nanns/assets/images/section/star-5.png" alt="images">
-                                        <p class="fs-12">15 May 2020 9:30 am</p>
-
-                                    </div>
-                                    <p class="fs-16 lh-22 text-color-2">"My experience with property management
-                                        services has exceeded expectations. They efficiently manage properties
-                                        with a professional and attentive approach in every situation. I feel
-                                        reassured that any issue will be resolved promptly and effectively."</p>
-                                    <div class="author-box flex">
-                                        <div class="images">
-                                            <img class="lazyload" data-src="/nanns/assets/images/author/avt-cm1.jpg"
-                                                src="/nanns/assets/images/author/avt-cm1.jpg" alt="images">
+                            @forelse($reviews as $review)
+                                <div class="swiper-slide">
+                                    <div class="tf-testimonial bg-4">
+                                        <div class="inner-top flex-two">
+                                            <div class="rating-stars">
+                                                @php $rating = (int) ($review->rating ?? 0); @endphp
+                                                @for ($i = 1; $i <= 5; $i++)
+                                                    @if ($i <= $rating)
+                                                        <i class="fas fa-star text-warning"></i>
+                                                    @else
+                                                        <i class="far fa-star text-warning"></i>
+                                                    @endif
+                                                @endfor
+                                            </div>
+                                            <p class="fs-12">
+                                                {{ optional($review->created_at)->format('d M Y h:i a') }}
+                                            </p>
                                         </div>
-                                        <div class="content">
-                                            <h5>Arlene McCoy</h5>
-                                            <p class="fs-12 lh-16">CEO Themesflat</p>
+                                        <p class="fs-16 lh-22 text-color-2">"{{ $review->message }}"</p>
+                                        <div class="author-box flex">
+                                            <div class="images">
+                                                <img class="lazyload" data-src="{{ $review->image }}"
+                                                    src="{{ $review->image }}" alt="{{ $review->name }}">
+                                            </div>
+                                            <div class="content">
+                                                <h5>{{ $review->name }}</h5>
+                                                <p class="fs-12 lh-16">Customer</p>
+                                            </div>
                                         </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="tf-testimonial bg-4">
-                                    <div class="inner-top flex-two">
-                                        <img class="lazyload" data-src="/nanns/assets/images/section/star-5.png"
-                                            src="/nanns/assets/images/section/star-5.png" alt="images">
-                                        <p class="fs-12">15 May 2020 9:30 am</p>
-
-                                    </div>
-                                    <p class="fs-16 lh-22 text-color-2">"My experience with property management
-                                        services has exceeded expectations. They efficiently manage properties
-                                        with a professional and attentive approach in every situation. I feel
-                                        reassured that any issue will be resolved promptly and effectively."</p>
-                                    <div class="author-box flex">
-                                        <div class="images">
-                                            <img class="lazyload" data-src="/nanns/assets/images/author/avt-cm2.jpg"
-                                                src="/nanns/assets/images/author/avt-cm2.jpg" alt="images">
-                                        </div>
-                                        <div class="content">
-                                            <h5>Arlene McCoy</h5>
-                                            <p class="fs-12 lh-16">CEO Themesflat</p>
-                                        </div>
-
                                     </div>
                                 </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="tf-testimonial bg-4">
-                                    <div class="inner-top flex-two">
-                                        <img class="lazyload" data-src="/nanns/assets/images/section/star-5.png"
-                                            src="/nanns/assets/images/section/star-5.png" alt="images">
-                                        <p class="fs-12">15 May 2020 9:30 am</p>
-
-                                    </div>
-                                    <p class="fs-16 lh-22 text-color-2">"My experience with property management
-                                        services has exceeded expectations. They efficiently manage properties
-                                        with a professional and attentive approach in every situation. I feel
-                                        reassured that any issue will be resolved promptly and effectively."</p>
-                                    <div class="author-box flex">
-                                        <div class="images">
-                                            <img class="lazyload" data-src="/nanns/assets/images/author/avt-cm3.jpg"
-                                                src="/nanns/assets/images/author/avt-cm3.jpg" alt="images">
-                                        </div>
-                                        <div class="content">
-                                            <h5>Arlene McCoy</h5>
-                                            <p class="fs-12 lh-16">CEO Themesflat</p>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="tf-testimonial bg-4">
-                                    <div class="inner-top flex-two">
-                                        <img class="lazyload" data-src="/nanns/assets/images/section/star-5.png"
-                                            src="/nanns/assets/images/section/star-5.png" alt="images">
-                                        <p class="fs-12">15 May 2020 9:30 am</p>
-
-                                    </div>
-                                    <p class="fs-16 lh-22 text-color-2">"My experience with property management
-                                        services has exceeded expectations. They efficiently manage properties
-                                        with a professional and attentive approach in every situation. I feel
-                                        reassured that any issue will be resolved promptly and effectively."</p>
-                                    <div class="author-box flex">
-                                        <div class="images">
-                                            <img class="lazyload" data-src="/nanns/assets/images/author/avt-cm1.jpg"
-                                                src="/nanns/assets/images/author/avt-cm1.jpg" alt="images">
-                                        </div>
-                                        <div class="content">
-                                            <h5>Arlene McCoy</h5>
-                                            <p class="fs-12 lh-16">CEO Themesflat</p>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="tf-testimonial bg-4">
-                                    <div class="inner-top flex-two">
-                                        <img class="lazyload" data-src="/nanns/assets/images/section/star-5.png"
-                                            src="/nanns/assets/images/section/star-5.png" alt="images">
-                                        <p class="fs-12">15 May 2020 9:30 am</p>
-
-                                    </div>
-                                    <p class="fs-16 lh-22 text-color-2">"My experience with property management
-                                        services has exceeded expectations. They efficiently manage properties
-                                        with a professional and attentive approach in every situation. I feel
-                                        reassured that any issue will be resolved promptly and effectively."</p>
-                                    <div class="author-box flex">
-                                        <div class="images">
-                                            <img class="lazyload" data-src="/nanns/assets/images/author/avt-cm2.jpg"
-                                                src="/nanns/assets/images/author/avt-cm2.jpg" alt="images">
-                                        </div>
-                                        <div class="content">
-                                            <h5>Arlene McCoy</h5>
-                                            <p class="fs-12 lh-16">CEO Themesflat</p>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="tf-testimonial bg-4">
-                                    <div class="inner-top flex-two">
-                                        <img class="lazyload" data-src="/nanns/assets/images/section/star-5.png"
-                                            src="/nanns/assets/images/section/star-5.png" alt="images">
-                                        <p class="fs-12">15 May 2020 9:30 am</p>
-
-                                    </div>
-                                    <p class="fs-16 lh-22 text-color-2">"My experience with property management
-                                        services has exceeded expectations. They efficiently manage properties
-                                        with a professional and attentive approach in every situation. I feel
-                                        reassured that any issue will be resolved promptly and effectively."</p>
-                                    <div class="author-box flex">
-                                        <div class="images">
-                                            <img class="lazyload" data-src="/nanns/assets/images/author/avt-cm3.jpg"
-                                                src="/nanns/assets/images/author/avt-cm3.jpg" alt="images">
-                                        </div>
-                                        <div class="content">
-                                            <h5>Arlene McCoy</h5>
-                                            <p class="fs-12 lh-16">CEO Themesflat</p>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
+                            @empty
+                                <p class="fs-16 lh-22 text-color-2">No reviews available yet.</p>
+                            @endforelse
                         </div>
                         <div class="swiper-pagination3"></div>
                     </div>
@@ -765,4 +652,5 @@ function handleSubmit() {
     return true;
 }
 </script>
+
 @endsection

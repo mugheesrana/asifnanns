@@ -15,7 +15,7 @@ class ContactController extends Controller
 {
     public function show()
     {
-        return view('guest.contact-us');
+        return view('client.pages.contact-us');
     }
    public function store(Request $request)
 {
@@ -27,7 +27,6 @@ class ContactController extends Controller
         'message' => 'required|string',
     ]);
 
-    // 1️⃣ Save in DB
     $message = ContactMessage::create($data);
 
     try {
@@ -44,10 +43,9 @@ class ContactController extends Controller
             Config::set('mail.from.address', $settings->mail_from_address);
             Config::set('mail.from.name', $settings->mail_from_name);
         }
-
         // 3️⃣ Try sending email
         Mail::send('emails.contact', ['data' => $data], function ($mail) use ($data, $settings) {
-            $mail->to($settings->email ?? 'mughees430@gmail.com')
+            $mail->to($settings->email ?? 'mughees7261@gmail.com')
                  ->subject($data['subject'] ?? 'New Contact Message');
         });
 

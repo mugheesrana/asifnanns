@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Review;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\BlogController;
@@ -7,6 +8,8 @@ use App\Http\Controllers\BrandController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\CarModelController;
 use App\Http\Controllers\CarVersionController;
+use App\Http\Controllers\TeamController;
+use App\Http\Controllers\Client\ReviewController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\RolePermissionController;
 
@@ -79,6 +82,15 @@ Route::middleware(['auth'])->group(function () {
 
         Route::get('/settings', [SettingController::class, 'index'])->name('settings');
         Route::post('/settings/update', [SettingController::class, 'update'])->name('settings.update');
+
+        // Reviews (admin)
+        Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews');
+        Route::patch('/reviews/{review}/status', [ReviewController::class, 'updateStatus'])->name('reviews.status');
+        //teams (admin)
+        Route::get('/teams', [TeamController::class, 'index'])->name('teams');
+        Route::get('/teams/create', [TeamController::class, 'create'])->name('team.create');
+        Route::post('/teams', [TeamController::class, 'store'])->name('team.store');
+        Route::delete('/teams/{team}', [TeamController::class, 'destroy'])->name('team.destroy');
 
         // Social Links CRUD
         Route::post('/social-links/store', [SettingController::class, 'store'])->name('social-links.store');

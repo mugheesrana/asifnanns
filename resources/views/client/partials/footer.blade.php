@@ -691,6 +691,72 @@
  <script src="/nanns/app/js/swiper.js"></script>
  <script src="/nanns/app/js/jquery-validate.js"></script>
  <script src="/nanns/app/js/price-ranger.js"></script>
+
+ <script>
+     // Global wishlist manager using localStorage
+     window.WishlistManager = {
+         key: 'wishlist_cars',
+
+         getWishlist: function () {
+             try {
+                 const raw = localStorage.getItem(this.key);
+                 return raw ? JSON.parse(raw) : [];
+             } catch (e) {
+                 return [];
+             }
+         },
+
+         saveWishlist: function (ids) {
+             localStorage.setItem(this.key, JSON.stringify(ids));
+         },
+
+         toggle: function (carId) {
+             let ids = this.getWishlist();
+             carId = String(carId);
+
+             if (ids.includes(carId)) {
+                 ids = ids.filter(id => id !== carId); // remove
+             } else {
+                 ids.push(carId); // add
+             }
+             this.saveWishlist(ids);
+             this.updateAllHeartIcons();
+         },
+
+         isInWishlist: function (carId) {
+             return this.getWishlist().includes(String(carId));
+         },
+
+         updateHeartIcon: function ($el) {
+             const carId = $el.data('car-id');
+             if (this.isInWishlist(carId)) {
+                 $el.addClass('in-wishlist'); // style this class in CSS as filled heart
+             } else {
+                 $el.removeClass('in-wishlist');
+             }
+         },
+
+         updateAllHeartIcons: function () {
+             const self = this;
+             $('[data-car-id]').each(function () {
+                 self.updateHeartIcon($(this));
+             });
+         }
+     };
+
+     // Handle click on any heart (works on all pages)
+     $(document).on('click', '.icon-favorite[data-car-id]', function (e) {
+         e.preventDefault();
+         const carId = $(this).data('car-id');
+         WishlistManager.toggle(carId);
+     });
+
+     // On page load, set initial heart states
+     $(document).ready(function () {
+         WishlistManager.updateAllHeartIcons();
+     });
+ </script>
+
  @yield('scripts')
  </body>
 

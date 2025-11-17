@@ -213,34 +213,39 @@
                             </div>
                         </form>
                     </div>
-                    {{-- ======= Review Section Styled Like Service Booking ============--}}
+                    {{-- ======= Review Section Styled Like Service Booking ============ --}}
                     <div class="widget-book-apoint mt-5">
                         <div class="heading-section flex align-center justify-space flex-wrap gap-20">
-                                        <h2 class="wow fadeInUpSmall" data-wow-delay="0.2s" data-wow-duration="1000ms">
-                                            Add Review</h2>
-                                    </div>
+                            <h2 class="wow fadeInUpSmall" data-wow-delay="0.2s" data-wow-duration="1000ms">
+                                Add Review</h2>
+                        </div>
                         <p class="mb-3">
                             Share your experience with this service.
                             <br> Your feedback helps others make better decisions.
                         </p>
 
-                        <form class="form-submit" enctype="multipart/form-data">
+                        <form class="form-submit" action="{{ route('review.store') }}" method="POST"
+                            enctype="multipart/form-data">
+                            @csrf
 
                             <div class="grid-sw-2">
                                 <fieldset class="style-text">
                                     <label class="font-1 fs-14 fw-5">Name</label>
-                                    <input type="text" class="tb-my-input" placeholder="Your Name">
+                                    <input type="text" name="name" class="tb-my-input" placeholder="Your Name"
+                                        required>
                                 </fieldset>
 
                                 <fieldset class="style-text">
                                     <label class="font-1 fs-14 fw-5">Email</label>
-                                    <input type="email" class="tb-my-input" placeholder="Your Email">
+                                    <input type="email" name="email" class="tb-my-input" placeholder="Your Email"
+                                        required>
                                 </fieldset>
                             </div>
 
                             {{-- Star Rating --}}
                             <fieldset class="style-text mt-2">
                                 <label class="font-1 fs-14 fw-5">Rating</label>
+
                                 <div class="star-rating" style="font-size: 26px; cursor: pointer;">
                                     <span data-value="1" class="star">&#9733;</span>
                                     <span data-value="2" class="star">&#9733;</span>
@@ -248,12 +253,14 @@
                                     <span data-value="4" class="star">&#9733;</span>
                                     <span data-value="5" class="star">&#9733;</span>
                                 </div>
+
+                                <input type="hidden" name="rating" id="rating-value" value="">
                             </fieldset>
 
                             {{-- Review Text --}}
                             <fieldset class="style-text">
                                 <label class="font-1 fs-14 fw-5">Write Review</label>
-                                <textarea rows="3" placeholder="Write your experience..."></textarea>
+                                <textarea rows="3" name="message" placeholder="Write your experience..." required></textarea>
                             </fieldset>
 
                             <div class="row">
@@ -261,18 +268,35 @@
                                 <div class="col-sm-6">
                                     <fieldset class="style-text">
                                         <label class="font-1 fs-14 fw-5">Upload Image (optional)</label>
-                                        <input type="file" accept="image/*" class="tb-my-input">
+                                        <input type="file" name="image" accept="image/*" class="tb-my-input">
                                         <small class="fs-12 text-muted">JPG, PNG up to 5MB</small>
                                     </fieldset>
                                 </div>
                             </div>
 
                             <div class="button-boxs">
-                                <button type="button" class="sc-button">
+                                <button type="submit" class="sc-button">
                                     <span>Submit Review</span>
                                 </button>
                             </div>
                         </form>
+
+                        {{-- JS for Star Rating --}}
+                        <script>
+                            document.querySelectorAll('.star').forEach(star => {
+                                star.addEventListener('click', function() {
+                                    let rating = this.getAttribute('data-value');
+                                    document.getElementById('rating-value').value = rating;
+
+                                    document.querySelectorAll('.star').forEach(s => s.style.color = '#ccc');
+
+                                    for (let i = 0; i < rating; i++) {
+                                        document.querySelectorAll('.star')[i].style.color = '#f5c518';
+                                    }
+                                });
+                            });
+                        </script>
+
                     </div>
 
 

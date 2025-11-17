@@ -290,7 +290,7 @@
                                                 </div>
                                                 <ul class="change-heart flex">
                                                     <li class="box-icon w-32">
-                                                        <a href="#" class="icon">
+                                                        <a href="#" class="icon icon-favorite" data-car-id="{{ $car->id }}">
                                                             <svg width="18" height="16" viewBox="0 0 18 16"
                                                                 fill="none" xmlns="http://www.w3.org/2000/svg">
                                                                 <path

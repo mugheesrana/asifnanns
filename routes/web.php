@@ -25,13 +25,10 @@ Route::get('/service-listings', function () {
     return view('client.pages.service-listings');
 })->name('service-listings');
 
-Route::get('/contact-us', function () {
-    return view('client.pages.contact-us');
-})->name('contact-us');
 
-// Route::get('/service-details', function () {
-//     return view('client.pages.service-details');
-// })->name('service-details');
+Route::get('/service-details', function () {
+    return view('client.pages.service-details');
+})->name('service-details');
 
 Route::get('/custom-service-request', function () {
     return view('client.pages.custom-service-request');
@@ -56,6 +53,12 @@ Route::get('/faq', function () {
 })->name('faq');
 
 
+use App\Http\Controllers\Client\ReviewController;
+
+Route::get('/review', [ReviewController::class, 'create'])->name('review.create');
+Route::post('/review', [ReviewController::class, 'store'])->name('review.store');
+
+
  Route::get('/car-details/{id}', [HomeController::class, 'carDetails'])->name('car.details');
 Route::get('/cars-list', [HomeController::class, 'allCars'])->name('cars.list');
 // Route::get('/services', [ServicesController::class, 'services'])->name('services');
@@ -71,14 +74,15 @@ Route::get('/get-versions/{modelId}', [HomeController::class, 'getVersions'])->n
 // Route::get('/dealers', fn() => view('guest.dealers-list'))->name('dealers.list');
 // Route::get('/dealer/{id}', fn($id) => view('guest.dealer-profile'))->name('dealer.profile');
 
-// Route::get('/contact-us', [ContactController::class, 'show'])->name('contact-us');
-// Route::post('/contact-us', [ContactController::class, 'store'])->name('contact.store');
+Route::get('/contact-us', [ContactController::class, 'show'])->name('contact-us');
+Route::post('/contact-us', [ContactController::class, 'store'])->name('contact.store');
 
 // Route::get('/blog/{slug}',[BlogController::class, 'showBlog'])->name('blogs.show');
 // Route::get('/blogs', [BlogController::class, 'show'])->name('blogs');
-// Route::get('/wishlist', [HomeController::class, 'wishlist'])->name('wishlist');
-// Route::post('/api/wishlist-cars', [HomeController::class, 'getWishlistCars'])->name('api.wishlist.cars');
-// Route::post('/api/wishlist-cars-html', [HomeController::class, 'getWishlistCarsHtml'])->name('api.wishlist.cars.html');
+
+Route::get('/wishlist', [HomeController::class, 'wishlist'])->name('wishlist');
+Route::post('/api/wishlist-cars', [HomeController::class, 'getWishlistCars'])->name('api.wishlist.cars');
+Route::post('/api/wishlist-cars-html', [HomeController::class, 'getWishlistCarsHtml'])->name('api.wishlist.cars.html');
 
 
 Route::middleware(['auth'])->group(function () {

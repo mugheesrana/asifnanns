@@ -6,12 +6,12 @@
             <!-- User profile image -->
             <div class="profile-img"> <img src="{{asset('admin/assets/images/users/profile.png')}}" alt="user" />
                 <!-- this is blinking heartbit-->
-                <div class="notify setpos"> <span class="heartbit"></span> <span class="point"></span>
-                </div>
+                {{-- <div class="notify setpos"> <span class="heartbit"></span> <span class="point"></span>
+                </div> --}}
             </div>
             <!-- User profile text-->
             <div class="profile-text">
-                <h5>Markarn Doe</h5>
+                <h5>{{ Auth::user()->name }}</h5>
                 <a href="{{ route('admin.users.edit', Auth::id()) }}" class="dropdown-toggle u-dropdown"
                     data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"><i
                         class="mdi mdi-settings"></i></a>
@@ -83,6 +83,15 @@
 
                     </ul>
 
+                </li>
+                <li> <a class="has-arrow waves-effect waves-dark" href="{{ route('admin.reviews') }}"
+                        aria-expanded="false"><i class="mdi mdi-message"></i><span
+                            class="hide-menu">Reviews</span></a>
+                </li>
+
+                   <li> <a class="has-arrow waves-effect waves-dark" href="{{ route('admin.teams') }}"
+                        aria-expanded="false"><i class="mdi mdi-account-group"></i><span
+                            class="hide-menu">Team</span></a>
                 </li>
                 <li> <a class="has-arrow waves-effect waves-dark" href="{{ route('admin.settings') }}"
                         aria-expanded="false"><i class="mdi mdi-settings"></i><span

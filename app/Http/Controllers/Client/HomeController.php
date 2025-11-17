@@ -208,7 +208,7 @@ class HomeController extends Controller
         return response()->json($cars);
     }
 
-    // Get wishlist cars HTML (server-side render, same UI as cars-list)
+    // Get wishlist cars HTML (server-side render, same UI as home featured cars)
     public function getWishlistCarsHtml(Request $request)
     {
         $ids = $request->input('ids', []);
@@ -220,6 +220,6 @@ class HomeController extends Controller
             ->whereIn('id', $ids)
             ->get();
 
-        return view('guest.partials.cars-grid', compact('cars'))->render();
+        return view('client.partials.wishlist-cars-home', compact('cars'))->render();
     }
 }

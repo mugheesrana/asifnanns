@@ -84,20 +84,6 @@ if (!function_exists('getCarsByBrand')) {
     }
 }
 
-// if (!function_exists('getYears')) {
-//     function getYears()
-//     {
-//         return Car::all();
-//     }
-// }
-
-
-// if (!function_exists('engineTypes')) {
-//     function engineTypes()
-//     {
-//         return Car::all();
-//     }
-// }
 
 if (! function_exists('site_settings')) {
     /**

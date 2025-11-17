@@ -69,8 +69,9 @@
                     </div>
                     <div id="comments" class="comments">
                         <div class="respond-comment">
-                            <form method="post" id="loan-calculator" class="comment-form form-submit" action="#"
+                            <form id="loan-calculator" class="comment-form form-submit" action="{{ route('contact.store') }}" method="POST"
                                 accept-charset="utf-8" novalidate="novalidate">
+                                 @csrf
                                 <div class="grid-sw-2">
                                     <fieldset class="email-wrap style-text">
                                         <label class="font-1 fs-14 fw-5">Name</label>
@@ -86,7 +87,7 @@
                                 <div class="grid-sw-2">
                                     <fieldset class="email-wrap style-text">
                                         <label class="font-1 fs-14 fw-5">Phone Numbers</label>
-                                        <input type="tel" class="tb-my-input" name="tel" placeholder="Phone Numbers"
+                                        <input type="tel" class="tb-my-input" name="phone" placeholder="Phone Numbers"
                                             required="">
                                     </fieldset>
                                     <fieldset class="phone-wrap style-text">
